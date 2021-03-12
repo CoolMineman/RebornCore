@@ -69,10 +69,6 @@ public class ClientChunkManager {
 		final MinecraftClient minecraftClient = MinecraftClient.getInstance();
 
 		RenderSystem.enableDepthTest();
-		RenderSystem.shadeModel(7425);
-		RenderSystem.enableAlphaTest();
-		RenderSystem.defaultAlphaFunc();
-
 		final Tessellator tessellator = Tessellator.getInstance();
 		final BufferBuilder bufferBuilder = tessellator.getBuffer();
 

@@ -66,95 +66,97 @@ public class ItemStackRenderer implements HudRenderCallback {
 	}
 
 	private void export(ItemStack stack, int size, Identifier identifier) {
-		File dir = new File(FabricLoader.getInstance().getGameDirectory(), "item_renderer/" + identifier.getNamespace());
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
-		File file = new File(dir, identifier.getPath() + ".png");
+	//TODO this needs a rewrite
 
-		if (file.exists()) {
-			file.delete();
-		}
+	// 	File dir = new File(FabricLoader.getInstance().getGameDirectory(), "item_renderer/" + identifier.getNamespace());
+	// 	if (!dir.exists()) {
+	// 		dir.mkdir();
+	// 	}
+	// 	File file = new File(dir, identifier.getPath() + ".png");
 
-		MinecraftClient minecraft = MinecraftClient.getInstance();
+	// 	if (file.exists()) {
+	// 		file.delete();
+	// 	}
 
-		if (minecraft.getItemRenderer() == null || minecraft.world == null) {
-			return;
-		}
+	// 	MinecraftClient minecraft = MinecraftClient.getInstance();
 
-		final Framebuffer framebuffer = new Framebuffer(size, size, true, MinecraftClient.IS_SYSTEM_MAC);
-		framebuffer.setClearColor(0.0F, 0.0F, 0.0F, 0.0F);
-		framebuffer.clear(MinecraftClient.IS_SYSTEM_MAC);
+	// 	if (minecraft.getItemRenderer() == null || minecraft.world == null) {
+	// 		return;
+	// 	}
 
-		framebuffer.beginWrite(true);
+	// 	final Framebuffer framebuffer = new Framebuffer(size, size, true, MinecraftClient.IS_SYSTEM_MAC);
+	// 	framebuffer.setClearColor(0.0F, 0.0F, 0.0F, 0.0F);
+	// 	framebuffer.clear(MinecraftClient.IS_SYSTEM_MAC);
 
-		final ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-		final BakedModel model = itemRenderer.getHeldItemModel(stack, minecraft.world, minecraft.player, 0);
+	// 	framebuffer.beginWrite(true);
 
-		RenderSystem.matrixMode(GL11.GL_PROJECTION);
-		RenderSystem.pushMatrix();
-		RenderSystem.loadIdentity();
-		RenderSystem.ortho(-1, 1, 1, -1, -100.0, 100.0);
-		RenderSystem.matrixMode(GL11.GL_MODELVIEW);
-		RenderSystem.pushMatrix();
-		RenderSystem.loadIdentity();
+	// 	final ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+	// 	final BakedModel model = itemRenderer.getHeldItemModel(stack, minecraft.world, minecraft.player, 0);
 
-		{
-			minecraft.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-			minecraft.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
+	// 	RenderSystem.matrixMode(GL11.GL_PROJECTION);
+	// 	RenderSystem.pushMatrix();
+	// 	RenderSystem.loadIdentity();
+	// 	RenderSystem.ortho(-1, 1, 1, -1, -100.0, 100.0);
+	// 	RenderSystem.matrixMode(GL11.GL_MODELVIEW);
+	// 	RenderSystem.pushMatrix();
+	// 	RenderSystem.loadIdentity();
 
-			RenderSystem.enableRescaleNormal();
-			RenderSystem.enableAlphaTest();
-			RenderSystem.defaultAlphaFunc();
-			RenderSystem.enableBlend();
-			RenderSystem.enableDepthTest();
-			RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+	// 	{
+	// 		minecraft.getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+	// 		minecraft.getTextureManager().getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
 
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			MatrixStack matrixStack = new MatrixStack();
+	// 		RenderSystem.enableRescaleNormal();
+	// 		RenderSystem.enableAlphaTest();
+	// 		RenderSystem.defaultAlphaFunc();
+	// 		RenderSystem.enableBlend();
+	// 		RenderSystem.enableDepthTest();
+	// 		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
 
-			matrixStack.scale(2F, -2F, 1F);
+	// 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	// 		MatrixStack matrixStack = new MatrixStack();
 
-			boolean frontLit = !model.isSideLit();
-			if (frontLit) {
-				DiffuseLighting.disableGuiDepthLighting();
-			}
+	// 		matrixStack.scale(2F, -2F, 1F);
 
-			VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-			itemRenderer.renderItem(stack, ModelTransformation.Mode.GUI, false, matrixStack, immediate, 15728880, OverlayTexture.DEFAULT_UV, model);
-			immediate.draw();
+	// 		boolean frontLit = !model.isSideLit();
+	// 		if (frontLit) {
+	// 			DiffuseLighting.disableGuiDepthLighting();
+	// 		}
 
-			RenderSystem.enableDepthTest();
+	// 		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+	// 		itemRenderer.renderItem(stack, ModelTransformation.Mode.GUI, false, matrixStack, immediate, 15728880, OverlayTexture.DEFAULT_UV, model);
+	// 		immediate.draw();
 
-			if (frontLit) {
-				DiffuseLighting.enableGuiDepthLighting();
-			}
+	// 		RenderSystem.enableDepthTest();
 
-			RenderSystem.disableAlphaTest();
-			RenderSystem.disableRescaleNormal();
-		}
+	// 		if (frontLit) {
+	// 			DiffuseLighting.enableGuiDepthLighting();
+	// 		}
 
-		RenderSystem.popMatrix();
-		RenderSystem.matrixMode(GL11.GL_PROJECTION);
-		RenderSystem.popMatrix();
-		RenderSystem.matrixMode(GL11.GL_MODELVIEW);
+	// 		RenderSystem.disableAlphaTest();
+	// 		RenderSystem.disableRescaleNormal();
+	// 	}
 
-		framebuffer.endWrite();
+	// 	RenderSystem.popMatrix();
+	// 	RenderSystem.matrixMode(GL11.GL_PROJECTION);
+	// 	RenderSystem.popMatrix();
+	// 	RenderSystem.matrixMode(GL11.GL_MODELVIEW);
+
+	// 	framebuffer.endWrite();
 
 
-		try (NativeImage nativeImage = new NativeImage(size, size, false)) {
-			GlStateManager.bindTexture(framebuffer.getColorAttachment());
-			nativeImage.loadFromTextureImage(0, false);
-			nativeImage.mirrorVertically();
+	// 	try (NativeImage nativeImage = new NativeImage(size, size, false)) {
+	// 		GlStateManager.bindTexture(framebuffer.getColorAttachment());
+	// 		nativeImage.loadFromTextureImage(0, false);
+	// 		nativeImage.mirrorVertically();
 
-			try {
-				byte[] bytes = nativeImage.getBytes();
-				FileUtils.writeByteArrayToFile(file, bytes);
-				System.out.println("Wrote " + file.getAbsolutePath());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		framebuffer.delete();
+	// 		try {
+	// 			byte[] bytes = nativeImage.getBytes();
+	// 			FileUtils.writeByteArrayToFile(file, bytes);
+	// 			System.out.println("Wrote " + file.getAbsolutePath());
+	// 		} catch (Exception e) {
+	// 			e.printStackTrace();
+	// 		}
+	// 	}
+	// 	framebuffer.delete();
 	}
 }

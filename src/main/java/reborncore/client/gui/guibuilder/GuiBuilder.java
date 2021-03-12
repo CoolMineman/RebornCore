@@ -33,6 +33,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -82,7 +83,7 @@ public class GuiBuilder {
 	}
 
 	public void drawDefaultBackground(MatrixStack matrixStack, Screen gui, int x, int y, int width, int height) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		// RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		MinecraftClient.getInstance().getTextureManager().bindTexture(resourceLocation);
 		gui.drawTexture(matrixStack, x, y, 0, 0, width / 2, height / 2);
 		gui.drawTexture(matrixStack, x + width / 2, y, 150 - width / 2, 0, width / 2, height / 2);
@@ -178,9 +179,9 @@ public class GuiBuilder {
 			} else {
 				list.add(new TranslatableText("reborncore.gui.tooltip.lock_items"));
 			}
-			RenderSystem.pushMatrix();
+			matrixStack.push();
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.popMatrix();
+			matrixStack.pop();
 		}
 	}
 
@@ -209,13 +210,13 @@ public class GuiBuilder {
 		if (gui.isPointInRect(x, y, 20, 12, mouseX, mouseY)) {
 			List<Text> list = new ArrayList<>();
 			list.add(new TranslatableText("reborncore.gui.tooltip.hologram"));
-			RenderSystem.pushMatrix();
+			matrixStack.push();
 			if (layer == GuiBase.Layer.FOREGROUND) {
 				mouseX -= gui.getGuiLeft();
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.popMatrix();
+			matrixStack.pop();
 		}
 	}
 
@@ -325,8 +326,8 @@ public class GuiBuilder {
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.disableLighting();
-			RenderSystem.color4f(1, 1, 1, 1);
+			// RenderSystem.disableLighting();
+			// RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 
@@ -353,7 +354,7 @@ public class GuiBuilder {
 			x += gui.getGuiLeft();
 			y += gui.getGuiTop();
 		}
-		RenderSystem.disableLighting();
+		// RenderSystem.disableLighting();
 		RenderSystem.enableDepthTest();
 		RenderSystem.colorMask(true, true, true, false);
 		RenderUtil.drawGradientRect(0, x, y, x + 176, y + 20, 0x000000, 0xC0000000);
@@ -409,7 +410,7 @@ public class GuiBuilder {
 		TipsListWidget explanation = new TipsListWidget(gui, gui.getScreenWidth() - 14, 54, y, y + 76, 9 + 2, tips);
 		explanation.setLeftPos(x - 81);
 		explanation.render(matrixStack, mouseX, mouseY, 1.0f);
-		RenderSystem.color4f(1, 1, 1, 1);
+		// RenderSystem.color4f(1, 1, 1, 1);
 	}
 
 
@@ -436,8 +437,8 @@ public class GuiBuilder {
 		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 			Tessellator tessellator = Tessellator.getInstance();
 			BufferBuilder bufferBuilder = tessellator.getBuffer();
-			this.client.getTextureManager().bindTexture(DrawableHelper.OPTIONS_BACKGROUND_TEXTURE);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShader(GameRenderer::method_34543);
+      		RenderSystem.setShaderTexture(0, DrawableHelper.OPTIONS_BACKGROUND_TEXTURE);
 			bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 			bufferBuilder.vertex(this.left, this.bottom, 0.0D).texture((float) this.left / 32.0F, (float) (this.bottom + (int) this.getScrollAmount()) / 32.0F).color(32, 32, 32, 255).next();
 			bufferBuilder.vertex(this.right, this.bottom, 0.0D).texture((float) this.right / 32.0F, (float) (this.bottom + (int) this.getScrollAmount()) / 32.0F).color(32, 32, 32, 255).next();
@@ -546,8 +547,8 @@ public class GuiBuilder {
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.disableLighting();
-			RenderSystem.color4f(1, 1, 1, 1);
+			// RenderSystem.disableLighting();
+			// RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 
@@ -627,8 +628,8 @@ public class GuiBuilder {
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.disableLighting();
-			RenderSystem.color4f(1, 1, 1, 1);
+			// RenderSystem.disableLighting();
+			// RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 
@@ -690,8 +691,8 @@ public class GuiBuilder {
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.disableLighting();
-			RenderSystem.color4f(1, 1, 1, 1);
+			// RenderSystem.disableLighting();
+			// RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 
@@ -719,7 +720,7 @@ public class GuiBuilder {
 		final int iconHeight = sprite.getHeight();
 		int offsetHeight = drawHeight;
 
-		RenderSystem.color3f((color >> 16 & 255) / 255.0F, (float) (color >> 8 & 255) / 255.0F, (float) (color & 255) / 255.0F);
+		RenderSystem.setShaderColor((color >> 16 & 255) / 255.0F, (float) (color >> 8 & 255) / 255.0F, (float) (color & 255) / 255.0F);
 
 		int iteration = 0;
 		while (offsetHeight != 0) {
@@ -732,7 +733,7 @@ public class GuiBuilder {
 				break;
 			}
 		}
-		RenderSystem.color3f(1F, 1F, 1F);
+		// RenderSystem.color3f(1F, 1F, 1F);
 
 		gui.getMinecraft().getTextureManager().bindTexture(resourceLocation);
 	}
@@ -771,8 +772,8 @@ public class GuiBuilder {
 				mouseY -= gui.getGuiTop();
 			}
 			gui.renderTooltip(matrixStack, list, mouseX, mouseY);
-			RenderSystem.disableLighting();
-			RenderSystem.color4f(1, 1, 1, 1);
+			// RenderSystem.disableLighting();
+			// RenderSystem.color4f(1, 1, 1, 1);
 		}
 	}
 

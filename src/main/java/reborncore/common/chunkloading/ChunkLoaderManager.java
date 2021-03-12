@@ -62,12 +62,12 @@ public class ChunkLoaderManager extends PersistentState {
 
 	public static ChunkLoaderManager get(World world) {
 		ServerWorld serverWorld = (ServerWorld) world;
-		return serverWorld.getPersistentStateManager().getOrCreate(ChunkLoaderManager::fromTag, ChunkLoaderManager::new, KEY);
+		return serverWorld.getPersistentStateManager().getOrCreate(ChunkLoaderManager::readNbt, ChunkLoaderManager::new, KEY);
 	}
 
 	private final List<LoadedChunk> loadedChunks = new ArrayList<>();
 
-	public static ChunkLoaderManager fromTag(CompoundTag tag) {
+	public static ChunkLoaderManager readNbt(CompoundTag tag) {
 		ChunkLoaderManager chunkLoaderManager = new ChunkLoaderManager();
 
 		chunkLoaderManager.loadedChunks.clear();
@@ -82,7 +82,7 @@ public class ChunkLoaderManager extends PersistentState {
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag compoundTag) {
+	public CompoundTag writeNbt(CompoundTag compoundTag) {
 		CODEC.encodeStart(NbtOps.INSTANCE, loadedChunks)
 				.result()
 				.ifPresent(tag -> compoundTag.put("loadedchunks", tag));

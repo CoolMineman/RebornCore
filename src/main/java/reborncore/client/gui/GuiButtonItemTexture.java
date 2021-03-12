@@ -25,6 +25,7 @@
 package reborncore.client.gui;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -72,10 +73,10 @@ public class GuiButtonItemTexture extends ButtonWidget {
 			}
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glEnable(32826);
-			DiffuseLighting.enable();
+			DiffuseLighting.enableGuiDepthLighting();
 			ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 			itemRenderer.renderGuiItemIcon(itemstack, this.x, this.y);
-			this.drawTextWithShadow(matrixStack, mc.textRenderer, this.NAME, this.x + 20, this.y + 3,
+			DrawableHelper.drawTextWithShadow(matrixStack, mc.textRenderer, this.NAME, this.x + 20, this.y + 3,
 					Color.WHITE.getColor());
 		}
 	}

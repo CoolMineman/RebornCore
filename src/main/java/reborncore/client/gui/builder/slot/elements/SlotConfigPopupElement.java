@@ -174,9 +174,9 @@ public class SlotConfigPopupElement extends ElementBase {
 				color = new Color(0, 0, 0, 0);
 				break;
 		}
-		RenderSystem.color3f(255, 255, 255);
+		// RenderSystem.color3f(255, 255, 255);
 		GuiUtil.drawGradientRect(sx, sy, 18, 18, color.getColor(), color.getColor());
-		RenderSystem.color3f(255, 255, 255);
+		// RenderSystem.color3f(255, 255, 255);
 
 	}
 

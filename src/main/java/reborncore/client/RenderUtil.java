@@ -139,9 +139,9 @@ public class RenderUtil {
 		float f7 = (float) (endColor & 255) / 255.0F;
 		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
-		RenderSystem.disableAlphaTest();
+		// RenderSystem.disableAlphaTest();
 		RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-		RenderSystem.shadeModel(7425);
+		// RenderSystem.shadeModel(7425);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder vertexbuffer = tessellator.getBuffer();
 		vertexbuffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
@@ -150,9 +150,9 @@ public class RenderUtil {
 		vertexbuffer.vertex(left, bottom, 0).color(f5, f6, f7, f4).next();
 		vertexbuffer.vertex(right, bottom, 0).color(f5, f6, f7, f4).next();
 		tessellator.draw();
-		RenderSystem.shadeModel(7424);
+		// RenderSystem.shadeModel(7424);
 		RenderSystem.disableBlend();
-		RenderSystem.enableAlphaTest();
+		// RenderSystem.enableAlphaTest();
 		RenderSystem.enableTexture();
 	}
 

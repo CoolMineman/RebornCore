@@ -81,10 +81,10 @@ public class SlotConfigGui {
 			if (guiBase.be != slot.inventory) {
 				continue;
 			}
-			RenderSystem.color3f(255, 0, 0);
+			// RenderSystem.color3f(255, 0, 0);
 			Color color = new Color(255, 0, 0, 128);
 			GuiUtil.drawGradientRect(slot.x - 1, slot.y - 1, 18, 18, color.getColor(), color.getColor());
-			RenderSystem.color3f(255, 255, 255);
+			// RenderSystem.color3f(255, 255, 255);
 		}
 
 		if (selectedSlot != -1) {

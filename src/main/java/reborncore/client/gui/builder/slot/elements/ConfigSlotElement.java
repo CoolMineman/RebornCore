@@ -118,7 +118,7 @@ public class ConfigSlotElement extends ElementBase {
 		renderItem.renderInGuiWithOverrides(stack, xPos, yPos);
 		renderItem.renderGuiItemOverlay(gui.getTextRenderer(), stack, xPos, yPos, null);
 		RenderSystem.disableDepthTest();
-		RenderSystem.disableLighting();
+		// RenderSystem.disableLighting();
 		matrixStack.pop();
 		if (isHovering) {
 			drawSprite(matrixStack, gui, type.getButtonHoverOverlay(), x, y);
